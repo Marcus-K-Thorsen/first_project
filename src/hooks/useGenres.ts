@@ -1,6 +1,11 @@
 import { useState, useEffect} from "react";
 import apiClient from "../services/api-client";
-import { CanceledError } from "axios";
+
+
+interface GenreResponse {
+    count: number;
+    results: Genre[];
+}
 
 export interface Genre {
     id: number;
@@ -17,11 +22,13 @@ const useGenres = () => {
         const controller = new AbortController();
         setIsLoading(true);
         apiClient
-            .get<Genre[]>("genres", { signal: controller.signal })
+            .get<GenreResponse>("genres", { signal: controller.signal })
             .then((res) => {
-                setGenres(res.data);
+                setGenres(res.data.results);
             })
     })
+    
+    return { genres, error, isLoading };
 }
 
 export default useGenres;
