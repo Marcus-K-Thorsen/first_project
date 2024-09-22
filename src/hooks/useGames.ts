@@ -1,6 +1,3 @@
-import React from "react";
-import apiClient from "../services/api-client";
-import CanceledError from "axios";
 import useData from "./useData";
 
 export interface Platform {
@@ -14,7 +11,7 @@ export interface Game {
     name: string;
     background_image: string;
     parent_platforms: { platform: Platform }[];
-    metacritic: number
+    metacritic: number;
 }
 
 const useGames = () => useData<Game>("/games");

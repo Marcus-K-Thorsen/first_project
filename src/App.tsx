@@ -3,24 +3,24 @@ import NavBar from "./components/NavBar";
 import GameGrid from "./components/GameGrid";
 import GenreList from "./components/GenreList";
 
-
 function App() {
   return (
     <Grid
       templateAreas={{
+        lg: `"nav nav" 
+            "aside main"`,
         base: `"nav" "main"`,
-        lg: `"nav nav" "aside main"`,
       }}
     >
-      <GridItem gridArea="nav">
+      <GridItem area={"nav"}>
         <NavBar />
       </GridItem>
       <Show above="lg">
-        <GridItem gridArea="aside" bg="green">
+        <GridItem area={"aside"}>
           <GenreList />
         </GridItem>
       </Show>
-      <GridItem gridArea="main" bg="orange">
+      <GridItem area={"main"}>
         <GameGrid/>
       </GridItem>
     </Grid>
