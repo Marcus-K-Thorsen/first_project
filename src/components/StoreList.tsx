@@ -1,6 +1,7 @@
 import { Heading, HStack, Image, List, ListItem, Spinner, Button } from "@chakra-ui/react";
 import useStores, { Store } from "../hooks/useStores";
 import getCroppedImageUrl from "../services/image-url";
+import { useState } from "react";
 
 interface Props {
     onSelectStore: (store: Store) => void;
@@ -8,7 +9,11 @@ interface Props {
 }
 
 const StoreList = ({ onSelectStore, selectedStore }: Props) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
     const { data: stores, error, isLoading } = useStores();
+
+    const displayedStores = isExpanded ? stores : stores?.slice(0, 5);
 
     if (error) return null;
 
@@ -18,7 +23,7 @@ const StoreList = ({ onSelectStore, selectedStore }: Props) => {
         <>
             <Heading>Stores</Heading>
             <List>
-                {stores.map((store) => (
+                {displayedStores.map((store) => (
                     <ListItem key={store.id} paddingY="5px">
                         <HStack>
                             <Image
@@ -38,8 +43,10 @@ const StoreList = ({ onSelectStore, selectedStore }: Props) => {
                             </Button>
                         </HStack>
                     </ListItem>
-                
                 ))}
+                <Button onClick={() => setIsExpanded(!isExpanded)}>
+                    {isExpanded ? "Show less": "Show more"}
+                </Button>
             </List>
         </>
     );
